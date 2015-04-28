@@ -1,5 +1,5 @@
 // Filename: ocon.js
-// Timestamp: 2015.04.28-00:33:29 (last modified)  
+// Timestamp: 2015.04.28-00:35:34 (last modified)  
 // Author(s): Bumblehead (www.bumblehead.com)
 
 var ocon = ((typeof module === 'object') ? module : {}).exports = (function (p) {
@@ -11,8 +11,7 @@ var ocon = ((typeof module === 'object') ? module : {}).exports = (function (p) 
   };
   
   p.put = function (obj, composefn) {
-    composefn(obj);
-    return obj;
+    return composefn(obj), obj;
   };
   
   p.putarr = function (obj, composefnarr) {
