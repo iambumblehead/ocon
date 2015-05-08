@@ -1,5 +1,5 @@
 // Filename: ocon.js
-// Timestamp: 2015.04.28-00:35:34 (last modified)  
+// Timestamp: 2015.05.08-11:48:59 (last modified)  
 // Author(s): Bumblehead (www.bumblehead.com)
 
 var ocon = ((typeof module === 'object') ? module : {}).exports = (function (p) {
@@ -15,6 +15,10 @@ var ocon = ((typeof module === 'object') ? module : {}).exports = (function (p) 
   };
   
   p.putarr = function (obj, composefnarr) {
+    if (typeof obj !== 'function') {
+      throw new Error('[!!!] ocon: invalid call, functions required');
+    }
+
     return composefnarr.map(function (fn) {
       obj = p.put(obj, fn);
     }) && obj;
