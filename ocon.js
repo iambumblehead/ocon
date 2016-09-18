@@ -1,29 +1,31 @@
 // Filename: ocon.js
-// Timestamp: 2015.12.19-17:31:15 (last modified)
+// Timestamp: 2016.09.18-15:22:09 (last modified)
 // Author(s): Bumblehead (www.bumblehead.com)
 
-var ocon = module.exports = (function (p) {
+const ocon = module.exports = (p => {
+  
+  p = (arr, fn) => {
+    fn  = typeof arr === 'function' ? arr : fn;
+    arr = Array.isArray(arr) ? arr : [];
+    arr.push(fn);
 
-  p = function (args) {
-    return p.putarr(function (obj) {
-      return p.putarr(obj, args);
-    }, (args = [].slice.call(arguments, 0)));
+    return p.compose(arr);
   };
   
-  p.put = function (obj, composefn) {
-    return composefn(obj), obj;
-  };
+  p.compose = args => 
+    p.putarr(obj => p.putarr(obj, args), args);  
   
-  p.putarr = function (obj, composefnarr) {
+  p.put = (obj, composefn) =>
+    (composefn(obj), obj);
+
+  p.putarr = (obj, composefnarr) => {
     if (typeof obj !== 'function') {
       throw new Error('[!!!] ocon: invalid call, functions required');
     }
 
-    return composefnarr.map(function (fn) {
-      obj = p.put(obj, fn);
-    }) && obj;
+    return composefnarr.map(fn => obj = p.put(obj, fn)) && obj;
   };
 
   return p;
 
-}());
+})();

@@ -27,7 +27,9 @@ var viewobj = ocon(function (o) {
     return 'type-' + o.getname();
   };
 });
-var viewdropdown = ocon(viewobj, function (o) {
+var viewdropdown = ocon([
+  viewobj
+], function (o) {
   o.getname = function () {
     return 'dropdown';
   };
