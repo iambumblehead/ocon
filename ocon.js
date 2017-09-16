@@ -1,31 +1,29 @@
 // Filename: ocon.js
-// Timestamp: 2016.09.18-15:22:09 (last modified)
+// Timestamp: 2017.09.16-15:55:53 (last modified)
 // Author(s): Bumblehead (www.bumblehead.com)
+//
+// builds new object composed of methods from given objects
+//
+// references to returned object behave like 'this'
+// 'methods' on base objects have property definitions
+// specific to the final composed object
+// 
 
-const ocon = module.exports = (p => {
-  
-  p = (arr, fn) => {
-    fn  = typeof arr === 'function' ? arr : fn;
-    arr = Array.isArray(arr) ? arr : [];
-    arr.push(fn);
+module.exports = (arr, fn = typeof arr === 'function' ? arr : fn) => {
+  const putarr = (obj, fnarr) => (
+    fnarr.map(fn => fn(obj)) && obj);
 
-    return p.compose(arr);
-  };
-  
-  p.compose = args => 
-    p.putarr(obj => p.putarr(obj, args), args);  
-  
-  p.put = (obj, composefn) =>
-    (composefn(obj), obj);
+  arr = Array.isArray(arr) ? arr : [];
+  arr.push(fn);
 
-  p.putarr = (obj, composefnarr) => {
-    if (typeof obj !== 'function') {
-      throw new Error('[!!!] ocon: invalid call, functions required');
-    }
+  // returns a final 'function' value that composes
+  // a new object w/ putarr
+  //
+  // a cache for multiple ocon compositions
+  // and allows the object created here to be reused as
+  // composition function foir another object
+  //
+  return putarr(obj => putarr(obj, arr), arr);
+};
 
-    return composefnarr.map(fn => obj = p.put(obj, fn)) && obj;
-  };
 
-  return p;
-
-})();
