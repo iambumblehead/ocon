@@ -9,7 +9,7 @@
 // specific to the final composed object
 // 
 
-module.exports = (arr, fn = typeof arr === 'function' ? arr : fn) => {
+export default (arr, fn = typeof arr === 'function' ? arr : fn) => {
   const putarr = (obj, fnarr) => (
     fnarr.map(fn => fn(obj)) && obj);
 
