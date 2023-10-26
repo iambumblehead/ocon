@@ -20,7 +20,7 @@
     "reuse"
   ],
   "scripts": {
-    "test" : "node --test ./ocon.test.js"
+    "test": "node --test ./ocon.test.js"
   },
   "readmeFilename": "README.md",
   "description": "define objects reusable to componse new objects"
